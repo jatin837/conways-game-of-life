@@ -75,33 +75,6 @@ class Generation {
       }
     }
   }
-  render(){
-    var context = ""
-    for (var i = 0; i < this.size; i++){
-      for (var j = 0; j < this.size; j++){
-        if (i === 0 || i === this.size - 1 || j === 0 || j === this.size - 1 ){
-          context += '#'
-        }
-        else if (this.member[i][j] === 1){
-          context += '@'
-        }else {
-          context += ' '
-        }
-      }
-      context += '\n'
-    }
-    console.log(context)
-  }
+    
 }
 
-gen = new Generation(50)
-gen.setState(3, 4, 1)
-gen.setState(4, 4, 1)
-gen.setState(3, 3, 1)
-gen.setState(3, 5, 1)
-setInterval(main, 10000)
-function main(){
-  console.clear()
-  gen.render()
-  gen.setNextState()
-}
