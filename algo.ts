@@ -74,13 +74,9 @@ export class Generation {
     }
   }
   evolve(){
-    while (true){
-      console.log('running')
-      this.setNextState()
-      for (var i = 0; i < this.x; i ++){
-        for (var j = 0; j < this.y; j ++){
-          this.setState(i, j, this.member[i][j].next)
-        }
+    for (let i : number = 0; i < this.x; i++){
+      for (let j : number = 0; j < this.y; j++){
+        this.member[i][j].current = this.member[i][j].next
       }
     }
   }

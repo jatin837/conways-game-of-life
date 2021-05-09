@@ -1,3 +1,6 @@
+"use strict";
+exports.__esModule = true;
+exports.Generation = exports.State = void 0;
 var State = /** @class */ (function () {
     function State() {
         this.current = 0;
@@ -5,6 +8,7 @@ var State = /** @class */ (function () {
     }
     return State;
 }());
+exports.State = State;
 var Generation = /** @class */ (function () {
     function Generation(x, y) {
         this.x = x;
@@ -57,13 +61,9 @@ var Generation = /** @class */ (function () {
         }
     };
     Generation.prototype.evolve = function () {
-        while (true) {
-            console.log('running');
-            this.setNextState();
-            for (var i = 0; i < this.x; i++) {
-                for (var j = 0; j < this.y; j++) {
-                    this.setState(i, j, this.member[i][j].next);
-                }
+        for (var i = 0; i < this.x; i++) {
+            for (var j = 0; j < this.y; j++) {
+                this.member[i][j].current = this.member[i][j].next;
             }
         }
     };
@@ -74,10 +74,4 @@ var Generation = /** @class */ (function () {
     };
     return Generation;
 }());
-var gen = new Generation(105, 65);
-gen.setInitialState([
-    [2, 3],
-    [3, 4]
-]);
-console.log(gen.member[1][3].current);
-gen.evolve();
+exports.Generation = Generation;
