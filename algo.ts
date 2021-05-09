@@ -1,4 +1,4 @@
-class State {
+export class State {
   current: number;
   next: number;
   constructor(){
@@ -7,7 +7,7 @@ class State {
   }
 }
 
-class Generation {
+export class Generation {
   x: number
   y: number
   member: State[][]
@@ -92,10 +92,3 @@ class Generation {
   }
 }
 
-let gen = new Generation(105, 65)
-gen.setInitialState([
-  [2, 3],
-  [3, 4]
-])
-console.log(gen.member[1][3].current)
-gen.evolve()
