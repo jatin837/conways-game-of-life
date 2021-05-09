@@ -1,31 +1,55 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext('2d')
-x_blocks = 9
-y_blocks = 8
-const blockSize = 20
 
-canvas.height = blockSize*y_blocks
-canvas.width = blockSize*x_blocks
+const x_blocks = 105
+const y_blocks = 65
 
-ctx.fillStyle = 'white'
+const blockSize = 10
+
+const toPx = x => x*blockSize
+
+canvas.height = toPx(y_blocks)
+canvas.width = toPx(x_blocks)
+
+ctx.fillStyle = 'black'
 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-
-function drawBoard(m, n, blockSize){
+function drawBoard(m, n){
+  ctx.strokeStyle = 'white'
   for (var i = 1; i < m; i++){
     ctx.beginPath();
     ctx.lineWidth = 1;
-    ctx.moveTo(i*blockSize, 0);
-    ctx.lineTo(i*blockSize, (n+1)*blockSize);
+    ctx.moveTo(toPx(i), toPx(0));
+    ctx.lineTo(toPx(i), toPx(n+1));
     ctx.stroke() 
   }
   for (var i = 1; i < n; i++){
     ctx.beginPath();
     ctx.lineWidth = 1;
-    ctx.moveTo(0, i*blockSize);
-    ctx.lineTo((m+1)*blockSize, i*blockSize);
+    ctx.moveTo(toPx(0), toPx(i));
+    ctx.lineTo(toPx(m+1), toPx(i));
     ctx.stroke() 
+  }
+  for (var i = 0; i < m; i++){
+    ctx.fillStyle = 'black'
+    ctx.fillRect(toPx(i), toPx(0), blockSize, blockSize)
+  }
+  for (var i = 0; i < m; i++){
+    ctx.fillStyle = 'black'
+    ctx.fillRect(toPx(i), toPx(n - 1), blockSize, blockSize)
+  }
+  for (var i = 0; i < n; i++){
+    ctx.fillStyle = 'black'
+    ctx.fillRect(toPx(0), toPx(i), blockSize, blockSize)
+  }
+  for (var i = 0; i < n; i++){
+    ctx.fillStyle = 'black'
+    ctx.fillRect(toPx(m - 1), toPx(i), blockSize, blockSize)
   }
 }
 
+function drawCell(x, y){  
+  ctx.fillStyle = 'red'
+  ctx.fillRect(toPx(x), toPx(y), blockSize, blockSize)
+}
 drawBoard(x_blocks, y_blocks, blockSize)

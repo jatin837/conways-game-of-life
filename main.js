@@ -6,24 +6,25 @@ class State {
 }
 
 class Generation {
-  constructor(size){
-    this.size = size
-    this.member = new Array(this.size)
+  constructor(x, y){
+    this.x = x
+    this.y = y
+    this.member = new Array(this.x)
     this.addMembers()
   }
   
   addMembers(){
-    for (var i = 0; i < this.size; i++){
+    for (var i = 0; i < this.x; i++){
       this.member[i] = new Array()
-      for (var j = 0; j < this.size; j++){
+      for (var j = 0; j < this.y; j++){
         this.member[i][j] = new State()
       }
     }
   }
 
   setNextState(){
-    for (var i = 1; i < this.size - 1; i++){
-      for (var j = 1; j < this.size - 1; j++){
+    for (var i = 1; i < this.x - 1; i++){
+      for (var j = 1; j < this.y - 1; j++){
         this.member[i][j].next = this.getNextState(i, j)
       }
     }
@@ -58,23 +59,38 @@ class Generation {
       }
     }
     if (alive){
-      if (count < 2){
-        return 0
-      }
-      else if (count < 4){
-        return 1
-      }
-      else {
+      if (count < 2 || count > 3){
         return 0
       }
     }else {
       if (count === 3){
         return 1
-      }else {
-        return 0
       }
     }
   }
-    
+  evolve(){
+    while (true){
+      console.log('running')
+      this.setNextState()
+      for (var i = 0; i < this.x; i ++){
+        for (var j = 0; j < this.y; j ++){
+          this.setState(i, j, this.member[i][j].next)
+        }
+      }
+    }
+  }
+
+  setInitialState(initStates){
+    for (var i = 0; i < initStates.length; i++){
+      this.setState(initStates[i][0], initStates[i][1], 1)
+    }
+  }
 }
 
+gen = new Generation(105, 65)
+gen.setInitialState([
+  [2, 3],
+  [3, 4]
+])
+console.log(gen.member[1][3].current)
+gen.evolve()
