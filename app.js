@@ -70,4 +70,5 @@ while (true) {
         }
     }
     gen.evolve();
+    console.log(gen);
 }
