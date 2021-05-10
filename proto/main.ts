@@ -1,10 +1,10 @@
 var canvas = document.getElementById("screen") as HTMLCanvasElement
-var ctx = canvas.getContext('2d')
+var ctx : CanvasRenderingContext2D = canvas.getContext('2d')
 
-var blockSize = 20;
+var blockSize = 9;
 var toPx = function (x: number) { return x * blockSize; };
-var x_blocks : number = 7;
-var y_blocks : number = 7;
+var x_blocks : number = 110;
+var y_blocks : number = 70;
 canvas.height = toPx(y_blocks);
 canvas.width = toPx(x_blocks);
 
@@ -46,7 +46,7 @@ function drawBoard(m: number, n: number) {
 }
 function drawCell(x: number, y: number, color: string) {
     ctx.fillStyle = color;
-    ctx.fillRect(toPx(x), toPx(y), blockSize, blockSize);
+    ctx.fillRect(toPx(x)+1, toPx(y) + 1, blockSize - 2, blockSize- 2);
 }
 drawBoard(x_blocks, y_blocks);
 
@@ -60,8 +60,8 @@ for (let i = 0; i < x_blocks; i++) {
 }
 
 function setNextState() {
-    for (var i = 1; i < this.x - 1; i++) {
-        for (var j = 1; j < this.y - 1; j++) {
+    for (var i = 1; i < x_blocks - 1; i++) {
+        for (var j = 1; j < y_blocks - 1; j++) {
             gen[i][j][1] = getNextState(i, j);
         }
     }
@@ -83,6 +83,13 @@ function getNextState(i: number, j: number) {
             count++;
         }
     }
+    // just for debug
+    //********************************************************/
+    if (i === 2 && j == 3){
+        console.log('count ----------------')
+        console.log(count)
+    }
+    //********************************************************/
     if (gen[i][j][0] === 1) {
         if (count < 2 || count > 3) {
             return 0;
@@ -119,12 +126,15 @@ function setState(i: number, j: number, val: number) {
     gen[i][j][0] = val;
 }
 setInitialState([
-    [2, 2],
-    [2, 3],
-    [2, 1],
+    [3, 2],
+    [4, 3],
+    [2, 4],
+    [3, 4],
+    [4, 4]
 ]);
 
 function main() {
+    console.log(gen[2][3])
     for (let i = 1; i < x_blocks - 1; i++) {
         for (let j = 1; j < y_blocks - 1; j++) {
             if (gen[i][j][0] == 1) {
@@ -138,7 +148,6 @@ function main() {
 
     setNextState()
     evolve()
-    console.log('running')
 }
 
-setInterval(main, 6200)
+setInterval(main, 100)

@@ -1,9 +1,9 @@
 var canvas = document.getElementById("screen");
 var ctx = canvas.getContext('2d');
-var blockSize = 20;
+var blockSize = 9;
 var toPx = function (x) { return x * blockSize; };
-var x_blocks = 7;
-var y_blocks = 7;
+var x_blocks = 110;
+var y_blocks = 70;
 canvas.height = toPx(y_blocks);
 canvas.width = toPx(x_blocks);
 ctx.fillStyle = 'black';
@@ -43,7 +43,7 @@ function drawBoard(m, n) {
 }
 function drawCell(x, y, color) {
     ctx.fillStyle = color;
-    ctx.fillRect(toPx(x), toPx(y), blockSize, blockSize);
+    ctx.fillRect(toPx(x) + 1, toPx(y) + 1, blockSize - 2, blockSize - 2);
 }
 drawBoard(x_blocks, y_blocks);
 var gen = new Array(x_blocks);
@@ -54,8 +54,8 @@ for (var i = 0; i < x_blocks; i++) {
     }
 }
 function setNextState() {
-    for (var i = 1; i < this.x - 1; i++) {
-        for (var j = 1; j < this.y - 1; j++) {
+    for (var i = 1; i < x_blocks - 1; i++) {
+        for (var j = 1; j < y_blocks - 1; j++) {
             gen[i][j][1] = getNextState(i, j);
         }
     }
@@ -68,6 +68,13 @@ function getNextState(i, j) {
             count++;
         }
     }
+    // just for debug
+    //********************************************************/
+    if (i === 2 && j == 3) {
+        console.log('count ----------------');
+        console.log(count);
+    }
+    //********************************************************/
     if (gen[i][j][0] === 1) {
         if (count < 2 || count > 3) {
             return 0;
@@ -101,11 +108,14 @@ function setState(i, j, val) {
     gen[i][j][0] = val;
 }
 setInitialState([
-    [2, 2],
-    [2, 3],
-    [2, 1],
+    [3, 2],
+    [4, 3],
+    [2, 4],
+    [3, 4],
+    [4, 4]
 ]);
 function main() {
+    console.log(gen[2][3]);
     for (var i = 1; i < x_blocks - 1; i++) {
         for (var j = 1; j < y_blocks - 1; j++) {
             if (gen[i][j][0] == 1) {
@@ -118,6 +128,5 @@ function main() {
     }
     setNextState();
     evolve();
-    console.log('running');
 }
-setInterval(main, 6200);
+setInterval(main, 100);
