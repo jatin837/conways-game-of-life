@@ -4,6 +4,7 @@ var blockSize = 9;
 var toPx = function (x) { return x * blockSize; };
 var x_blocks = 110;
 var y_blocks = 70;
+var border = 1;
 canvas.height = toPx(y_blocks);
 canvas.width = toPx(x_blocks);
 ctx.fillStyle = 'black';
@@ -12,7 +13,7 @@ function drawBoard(m, n) {
     ctx.strokeStyle = 'white';
     for (var i = 1; i < m; i++) {
         ctx.beginPath();
-        ctx.lineWidth = 1;
+        ctx.lineWidth = border;
         ctx.moveTo(toPx(i), toPx(0));
         ctx.lineTo(toPx(i), toPx(n + 1));
         ctx.stroke();
@@ -25,25 +26,25 @@ function drawBoard(m, n) {
         ctx.stroke();
     }
     for (var i = 0; i < m; i++) {
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'white';
         ctx.fillRect(toPx(i), toPx(0), blockSize, blockSize);
     }
     for (var i = 0; i < m; i++) {
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'white';
         ctx.fillRect(toPx(i), toPx(n - 1), blockSize, blockSize);
     }
     for (var i = 0; i < n; i++) {
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'white';
         ctx.fillRect(toPx(0), toPx(i), blockSize, blockSize);
     }
     for (var i = 0; i < n; i++) {
-        ctx.fillStyle = 'black';
+        ctx.fillStyle = 'white';
         ctx.fillRect(toPx(m - 1), toPx(i), blockSize, blockSize);
     }
 }
 function drawCell(x, y, color) {
     ctx.fillStyle = color;
-    ctx.fillRect(toPx(x) + 1, toPx(y) + 1, blockSize - 2, blockSize - 2);
+    ctx.fillRect(toPx(x) + border, toPx(y) + border, blockSize - 2 * border, blockSize - 2 * border);
 }
 drawBoard(x_blocks, y_blocks);
 var gen = new Array(x_blocks);
@@ -68,13 +69,6 @@ function getNextState(i, j) {
             count++;
         }
     }
-    // just for debug
-    //********************************************************/
-    if (i === 2 && j == 3) {
-        console.log('count ----------------');
-        console.log(count);
-    }
-    //********************************************************/
     if (gen[i][j][0] === 1) {
         if (count < 2 || count > 3) {
             return 0;
