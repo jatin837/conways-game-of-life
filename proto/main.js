@@ -102,11 +102,13 @@ function setState(i, j, val) {
     gen[i][j][0] = val;
 }
 setInitialState([
-    [3, 2],
-    [4, 3],
-    [2, 4],
-    [3, 4],
-    [4, 4]
+    [28, 28],
+    [30, 29],
+    [27, 30],
+    [28, 30],
+    [31, 30],
+    [32, 30],
+    [33, 30]
 ]);
 function main() {
     console.log(gen[2][3]);
