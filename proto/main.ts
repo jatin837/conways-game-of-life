@@ -1,4 +1,4 @@
-jjkkjlet canvas = document.getElementById("screen") as HTMLCanvasElement;
+let canvas = document.getElementById("screen") as HTMLCanvasElement;
 let ctx : CanvasRenderingContext2D = canvas.getContext('2d');
 
 let blockSize = 9;
